@@ -12,6 +12,7 @@ Log	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
+setLevel  KEYWORD2
 setPrefix	KEYWORD2
 begin	KEYWORD2
 end	KEYWORD2

@@ -1,12 +1,17 @@
-#include <Arduino.h>
-
-#include "Log.h"
+#include <Log.h>
 
 Log::Log(HardwareSerial *serial)
     : serial(serial),
       prefix(nullptr)
 {
   //
+}
+
+Log &Log::setLevel(Level level)
+{
+  this->level = level;
+
+  return *this;
 }
 
 Log &Log::setPrefix(const char *prefix)
@@ -26,8 +31,13 @@ void Log::end()
   this->serial->end();
 }
 
-size_t Log::print(const char str[])
+size_t Log::print(const char *str)
 {
+  if (this->level < Level::LOG)
+  {
+    return 0;
+  }
+
   this->printPrefix(Level::LOG);
 
   this->isLineEnded = false;
@@ -35,8 +45,13 @@ size_t Log::print(const char str[])
   return this->serial->print(str);
 }
 
-size_t Log::println(const char str[])
+size_t Log::println(const char *str)
 {
+  if (this->level < Level::LOG)
+  {
+    return 0;
+  }
+
   this->printPrefix(Level::LOG);
 
   this->isLineEnded = true;
@@ -46,6 +61,11 @@ size_t Log::println(const char str[])
 
 size_t Log::println(unsigned long num, int base)
 {
+  if (this->level < Level::LOG)
+  {
+    return 0;
+  }
+
   this->printPrefix(Level::LOG);
 
   this->isLineEnded = true;
@@ -55,6 +75,11 @@ size_t Log::println(unsigned long num, int base)
 
 size_t Log::println(double num, int digits)
 {
+  if (this->level < Level::LOG)
+  {
+    return 0;
+  }
+
   this->printPrefix(Level::LOG);
 
   this->isLineEnded = true;
@@ -64,6 +89,11 @@ size_t Log::println(double num, int digits)
 
 size_t Log::println(long long num, int base)
 {
+  if (this->level < Level::LOG)
+  {
+    return 0;
+  }
+
   this->printPrefix(Level::LOG);
 
   this->isLineEnded = true;
@@ -71,8 +101,13 @@ size_t Log::println(long long num, int base)
   return this->serial->println((long)num, base);
 }
 
-size_t Log::warnln(const char str[])
+size_t Log::warnln(const char *str)
 {
+  if (this->level < Level::WARN)
+  {
+    return 0;
+  }
+
   this->printPrefix(Level::WARN);
 
   this->isLineEnded = true;

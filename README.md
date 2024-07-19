@@ -5,4 +5,5 @@
 
 Simple library for extending logging capabilities following the Serial interface.
 
-Provides easy in-place substitute for Serial.print extending with additional capabilities such as log level control.
+Provides an easy drop-in replacement for `Serial.print()` extending it with additional capabilities such as log level
+control.
